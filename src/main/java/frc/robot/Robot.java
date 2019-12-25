@@ -17,6 +17,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shoot;
+import frc.robot.subsystems.Stack;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,7 +30,7 @@ public class Robot extends TimedRobot {
   public static Drivebase m_drive = new Drivebase();
   public static Shoot m_shoot = new Shoot();
   public static Intake m_intake = new Intake();
-  
+  public static Stack m_stack = new Stack();
   public static OI m_oi;
 
   Command m_autonomousCommand;
@@ -86,7 +87,9 @@ public class Robot extends TimedRobot {
    * chooser code above (like the commented example) or additional comparisons
    * to the switch structure below with additional strings & commands.
    */
-  public double start,current;
+  public double start,current,interval;
+  public boolean rev = false;
+  public boolean press = false;
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
@@ -133,33 +136,50 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    double leftControl= m_oi.stick.getRawAxis(1)* 0.4;
-    double rightControl= m_oi.stick.getRawAxis(5) * 0.4;
+    //driverbase 
+    double leftControl= m_oi.stick.getRawAxis(1)* 0.7;
+    double rightControl= m_oi.stick.getRawAxis(3) * 0.7;
       m_drive.setLeft(leftControl);
     
       m_drive.setRight(rightControl);
     
-    boolean idle = true;
-    if(m_oi.stick.getRawButton(4)){
+    //shoot  
+    if(m_oi.stick.getRawButton(RobotMap.Y)){
       m_shoot.shoot();
-      idle = false;
     }
-    if(m_oi.stick.getRawButton(3))
+    if(m_oi.stick.getRawButton(RobotMap.B))
     {
-      m_shoot.load(0.5);
-      idle = false;
+      m_shoot.load(-1.0);
     }
-    if(idle){
+    else if (m_oi.stick.getRawButton(RobotMap.A)) {
+      m_shoot.reserve_load(1.0);
+    }
+    else {
       m_shoot.stop();
     }
-    if (m_oi.stick.getRawButton(5)) {
+    //intake
+    if (m_oi.stick.getRawButton(RobotMap.leftBut)) {
       m_intake.INTAKE();
     }
     else {
       m_intake.stop();
     }
+  
+    //stack
+    //m_stack.clean(m_oi.stick.getRawButton(6), Timer.getFPGATimestamp());
+    if (m_oi.stick.getRawButton(RobotMap.rightBut)) {
+      m_stack.stacker.set(1.0);
+    }
+    else if (m_oi.stick.getRawButton(RobotMap.rightTrig)) {
+      m_stack.stacker.set(-1.0);
+    }
+    else {
+      m_stack.stacker.set(0);
+    }
+    
   }
 
+  
   /**
    * This function is called periodically during test mode.
    */

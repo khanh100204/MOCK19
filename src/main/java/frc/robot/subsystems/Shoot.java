@@ -7,7 +7,11 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.PWMTalonSRX;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -18,9 +22,9 @@ import frc.robot.RobotMap;
 public class Shoot extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  Spark shooter1 = new Spark(RobotMap.shootaa);
-  Spark shooter2 = new Spark(RobotMap.shootbb);
-  PWMTalonSRX loader = new PWMTalonSRX(RobotMap.loading);
+  public Spark shooter1 = new Spark(RobotMap.shootaa);
+  public Spark shooter2 = new Spark(RobotMap.shootbb);
+  public WPI_VictorSPX loader = new WPI_VictorSPX(RobotMap.loader);
 
   public void shoot(){
     shooter1.set(1);
@@ -28,6 +32,9 @@ public class Shoot extends Subsystem {
   }
   public void load(double speed){
     loader.set(speed);
+  }
+  public void reserve_load(double speed){
+    loader.set(-speed);
   }
   public void stop(){
     shooter1.stopMotor();

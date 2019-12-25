@@ -24,12 +24,12 @@ public class Drivebase extends Subsystem {
   public double turnRight = -1.0;
   public double turnLeft = 1.0;
   public void setLeft(double x) {
-    leftMotor.set(x);
-    leftSlave.set(x);
+    leftMotor.set(-x);
+    leftSlave.set(-x);
   }
   public void setRight(double x) {
-    rightMotor.set(x*-0.85);
-    rightSlave.set(x*-0.85);
+    rightMotor.set(x*0.9);
+    rightSlave.set(x*0.9);
   }
   public void straight(double speed, long time){
     // time=time*1000;
