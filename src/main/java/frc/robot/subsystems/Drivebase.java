@@ -24,27 +24,25 @@ public class Drivebase extends Subsystem {
   public double turnRight = -1.0;
   public double turnLeft = 1.0;
   public void setLeft(double x) {
-    leftMotor.set(-x);
-    leftSlave.set(-x);
+    leftMotor.set(x);
+    leftSlave.set(x);
   }
   public void setRight(double x) {
-    rightMotor.set(x*0.9);
-    rightSlave.set(x*0.9);
+    rightMotor.set(-x*0.95);
+    rightSlave.set(-x*0.95);
   }
-  public void straight(double speed, long time){
-    // time=time*1000;
-    // long realtime = (new Double(time)).longValue();
-    long realtime = time*1000;
-    setRight(speed);
-    setLeft(speed);
+  public void straight(double speed, double time){
+    time=time*1000;
+    long realtime = (new Double(time)).longValue();
+      setRight(speed);  
+      setLeft(speed);
     try{Thread.sleep(realtime);}catch(InterruptedException e){}
     setRight(0);
     setLeft(0);
   }
-  public void turn(double speed, double turn, long time) {
-    // time=time*1000;
-    // long realtime = (new Double(time)).longValue();
-    long realtime = time*1000;
+  public void turn(double speed, double turn, double time) {
+    time=time*1000;
+    long realtime = (new Double(time)).longValue();
     setRight(turn*speed);
     setLeft(-turn*speed);
     try{Thread.sleep(realtime);}catch(InterruptedException e){}
@@ -54,6 +52,6 @@ public class Drivebase extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    // setDefaultCommand(new MySpecialCommand());6
   }
 }

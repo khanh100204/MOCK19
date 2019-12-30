@@ -100,7 +100,26 @@ public class Robot extends TimedRobot {
      * = new MyAutoCommand(); break; case "Default Auto": default:
      * autonomousCommand = new ExampleCommand(); break; }
      */
+    double speed = 0;
+    double time =0;
+    m_drive.straight(0.6, 3);
+                                  // m_drive.straight(speed, time);//280
+                                  // m_drive.turn(speed, m_drive.turnRight, time);
 
+                                  // m_drive.setRight(-0.6*0.95);
+                                  // m_drive.setLeft(0.6);
+                                  // m_intake.INTAKE();
+                                  // try{Thread.sleep(     );}catch(InterruptedException e){}//510
+                                  // m_drive.setRight(0);
+                                  // m_drive.setLeft(0);
+                                  // m_intake.stop();
+
+                                  // m_drive.turn(speed, m_drive.turnLeft, time);
+                                  // m_drive.straight(speed, /*long790*/time);
+                                  // m_drive.turn(speed, m_drive.turnLeft, time);
+                                  // m_drive.straight(speed, time);//240
+                                  // m_drive.turn(speed, m_drive.turnLeft, time);
+                                  // m_shoot.tShoot(3.0/*vo tan*/);
 
     // m_subsystem.leftMotor.set(0.5);
     // m_subsystem.rightMotor.set(0.5);
@@ -137,13 +156,13 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     //driverbase 
-    double leftControl= m_oi.stick.getRawAxis(1)* 0.7;
-    double rightControl= m_oi.stick.getRawAxis(3) * 0.7;
+    double leftControl= -m_oi.stick.getRawAxis(1)* 0.6;
+    double rightControl= -m_oi.stick.getRawAxis(3) * 0.6;
       m_drive.setLeft(leftControl);
     
       m_drive.setRight(rightControl);
     
-    //shoot  
+    //shoot
     if(m_oi.stick.getRawButton(RobotMap.Y)){
       m_shoot.shoot();
     }

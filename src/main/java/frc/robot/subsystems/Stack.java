@@ -33,7 +33,6 @@ public class Stack extends Subsystem {
   boolean rev = false;
   double start;
   public void clean(boolean x, double interval) {
-    
     if (x) {
       if (rev == false) {
         start = interval;

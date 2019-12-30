@@ -24,6 +24,13 @@ public class Intake extends Subsystem {
   public void stop() {
     Intaker.stopMotor();
   }
+  public void tIntake(double time) {
+    time=time*1000;
+    long realtime = (new Double(time)).longValue();
+    INTAKE();
+    try{Thread.sleep(realtime);}catch(InterruptedException e){}
+    stop();
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

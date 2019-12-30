@@ -41,6 +41,15 @@ public class Shoot extends Subsystem {
     shooter2.stopMotor();
     loader.stopMotor();
   }
+  public void tShoot(double time) {
+    time=time*1000;
+    long realtime = (new Double(time)).longValue();
+    shoot();
+    try{Thread.sleep(500);}catch(InterruptedException e){}
+    load(-1.0);
+    try{Thread.sleep(realtime);}catch(InterruptedException e){}
+    stop();
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
